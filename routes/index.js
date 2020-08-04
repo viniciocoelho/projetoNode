@@ -15,7 +15,7 @@ router.post('/post/add',
     imageMiddleware.upload,
     imageMiddleware.resize,    
     postController.addAction
-);
+); 
 
 //Edição
 router.get('/post/:slug/edit', postController.edit);
@@ -23,7 +23,7 @@ router.post('/post/:slug/edit', postController.editAction);
 
 //Visualização
 router.get('/post/:slug', postController.view);
-
+ 
 
 module.exports = router;  
       

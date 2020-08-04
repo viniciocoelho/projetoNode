@@ -6,6 +6,7 @@
         Images:
         <input type="file" name="photo" />
     </label>
+    <br />
     <label>
         Titulo:
         <br/>
