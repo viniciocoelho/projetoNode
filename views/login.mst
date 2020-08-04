@@ -1,0 +1,8 @@
+{{> header}}
+
+<h1>Faça seu login aqui</h1>
+
+<form>
+    <input type="text" name="usuario" />
+    <button>Entrar</button>
+</form>
