@@ -19,7 +19,11 @@ router.post('/post/add',
 
 //Edição
 router.get('/post/:slug/edit', postController.edit);
-router.post('/post/:slug/edit', postController.editAction);
+router.post('/post/:slug/edit', 
+    imageMiddleware.upload,
+    imageMiddleware.resize, 
+    postController.editAction
+    ); 
 
 //Visualização
 router.get('/post/:slug', postController.view);
