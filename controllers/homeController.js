@@ -2,14 +2,20 @@ const mongoose = require('mongoose');
 const Post = mongoose.model('Post');
 
 exports.index = async (req, res)=>{
-    let obj = {
+    let responseJson = {
        pageTitle: 'HOME',   
-       posts:[]    
+       posts:[],
+       tags:[]    
     };
 
+    const tags = await Post.getTagsList();
+    responseJson.tags = tags;
+
+    console.log(tags);
+
     const posts = await Post.find(); // busca todos os posts no mongoDB
-    obj.posts = posts;
+    responseJson.posts = posts;
 
 
-    res.render('home', obj);
+    res.render('home', responseJson); 
 };  
