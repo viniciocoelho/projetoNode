@@ -39,7 +39,10 @@ postSchema.pre('save', async function(next) {
 
 postSchema.statics.getTagsList = function() {
     return this.aggregate([
-        { $unwind:'$tags' }
+        { $unwind:'$tags' }, //separando os posts por tags
+        { $group: { _id:'$tags', count:{ $sum:1}}}, //somando as tags iguais separadamente
+        { $sort:{ count:-1 }}
+
     ]);
 }
 

@@ -11,11 +11,10 @@ exports.index = async (req, res)=>{
     const tags = await Post.getTagsList();
     responseJson.tags = tags;
 
-    console.log(tags);
 
     const posts = await Post.find(); // busca todos os posts no mongoDB
     responseJson.posts = posts;
 
 
     res.render('home', responseJson); 
-};  
+}; 
