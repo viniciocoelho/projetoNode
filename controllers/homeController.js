@@ -11,7 +11,13 @@ exports.index = async (req, res)=>{
 
     responseJson.tag = req.query.t;
 
-    const tags = await Post.getTagsList();
+    const postFilter = (typeof responseJson.tag != 'undefined') ? { tags: responseJson.tag}: {};
+
+    const tagsPromise = Post.getTagsList();
+    const postsPromise = Post.find(postFilter); // busca todos os posts no mongoDB
+
+    const [tags, posts] = await Promise.all([tagsPromise, postsPromise]);
+
     for(let i in tags) {
         if(tags[i]._id == responseJson.tag) {
             tags[i].class = "selected";
@@ -19,9 +25,6 @@ exports.index = async (req, res)=>{
     }
 
     responseJson.tags = tags;
-
-
-    const posts = await Post.find(); // busca todos os posts no mongoDB
     responseJson.posts = posts;
 
 
