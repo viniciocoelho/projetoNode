@@ -17,7 +17,7 @@ router.post('/post/add',
     postController.addAction
 ); 
 
-//Edição
+//Edição 
 router.get('/post/:slug/edit', postController.edit);
 router.post('/post/:slug/edit', 
     imageMiddleware.upload,
