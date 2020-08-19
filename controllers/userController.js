@@ -14,6 +14,8 @@ exports.loginAction = (req, res) => {
             return;
         }
 
+        req.login(result, ()=>{});
+
         req.flash('success', 'Você foi logado com sucesso!');
         res.redirect('/');
     });
