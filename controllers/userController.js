@@ -37,3 +37,8 @@ exports.registerAction = (req, res) => {
         res.redirect('/users/login');
     });
 };
+
+exports.logout = (req, res) => {
+    req.logout();
+    res.redirect('/');
+};
