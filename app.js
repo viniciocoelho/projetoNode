@@ -28,10 +28,21 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use((req, res, next)=>{
-    res.locals.h = helpers;
+    res.locals.h = { ...helpers }; // {... XXXX} essa notação passa os valores de helpers (menus) para o h, não afetando o filtro abaixo.
     res.locals.flashes = req.flash();
     res.locals.user = req.user;
-    next();
+    
+    // Filtro dos menus conforme a situção do usuário (logado ou não) 
+    if(req.isAuthenticated()) {
+        // filtrar menu para guest ou logged
+        res.locals.h.menu = res.locals.h.menu.filter(i => (i.logged));
+
+    } else {
+        // filtrar menu para guest
+        res.locals.h.menu = res.locals.h.menu.filter(i => i.guest);
+    }
+
+    next(); 
 }); 
 
 const User = require('./models/User');

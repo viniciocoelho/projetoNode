@@ -21,7 +21,7 @@ router.post('/post/add',
     imageMiddleware.upload,
     imageMiddleware.resize,    
     postController.addAction
-); 
+);  
 
 //Edição 
 router.get('/post/:slug/edit', authMiddleware.isLogged, postController.edit);
