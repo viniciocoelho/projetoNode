@@ -3,6 +3,8 @@ const homeController = require('../controllers/homeController');
 const userController = require('../controllers/userController');
 const postController = require('../controllers/postController');
 const imageMiddleware = require('../middlewares/imageMiddleware');
+const authMiddleware = require('../middlewares/authMiddleware');
+
 
 const router = express.Router();
 router.get('/', homeController.index);
@@ -13,16 +15,18 @@ router.post('/users/login', userController.loginAction);
 router.get('/users/logout', userController.logout);
 
 //Adição 
-router.get('/post/add', postController.add);
+router.get('/post/add',authMiddleware.isLogged, postController.add);
 router.post('/post/add',
+    authMiddleware.isLogged,
     imageMiddleware.upload,
     imageMiddleware.resize,    
     postController.addAction
 ); 
 
 //Edição 
-router.get('/post/:slug/edit', postController.edit);
+router.get('/post/:slug/edit', authMiddleware.isLogged, postController.edit);
 router.post('/post/:slug/edit', 
+    authMiddleware.isLogged,
     imageMiddleware.upload,
     imageMiddleware.resize, 
     postController.editAction
