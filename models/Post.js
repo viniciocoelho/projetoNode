@@ -15,7 +15,8 @@ const postSchema = new mongoose.Schema({
         type:String,
         trim:true
     },
-    tags:[String]
+    tags:[String],
+    author: mongoose.Schema.Types.ObjectId
 });
 
 postSchema.pre('save', async function(next) {
@@ -43,6 +44,24 @@ postSchema.statics.getTagsList = function() {
         { $group: { _id:'$tags', count:{ $sum:1}}}, //somando as tags iguais separadamente
         { $sort:{ count:-1 }}
 
+    ]);
+};
+
+postSchema.statics.findPosts = function(filters = {}) {
+    return this.aggregate([
+        { $match: filters },
+        { $lookup: {
+            from:'users',
+            let:{ 'author':'$author'},
+            pipeline:[
+                { $match: { $expr:{ $eq:[ '$$author', '$_id']}}},
+                { $limit: 1}
+            ],
+            as:'author'
+        } },
+        { $addFields: {
+            'author': { $arrayElemAt: [ '$author', 0]}
+        } }
     ]);
 }
 

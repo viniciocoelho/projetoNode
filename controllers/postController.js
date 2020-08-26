@@ -14,6 +14,8 @@ exports.add = (req, res) => {
 
 exports.addAction = async (req, res) => {
     req.body.tags = req.body.tags.split(',').map(t => t.trim());
+    //associa o post ao autor
+    req.body.author = req.user._id;
     // o split é usado para separar as tegs. map é utilizado para gerar um novo array mas sem espaço entre os elementos.
     const post = new Post(req.body);
    
